@@ -1,14 +1,31 @@
-name: Test Runner
+name: Self Hosted Runner Test
 
 on:
+  workflow_dispatch:
   push:
+    branches:
+      - main
 
 jobs:
-  build:
-    runs-on: [self-hosted, Linux, X64]
+  test-runner:
+    runs-on: self-hosted
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: Test
-        run: echo "Running on EC2 Self Hosted Runner"
+      - name: Display runner information
+        run: |
+          echo "Runner Name: $RUNNER_NAME"
+          echo "Runner OS: $RUNNER_OS"
+          echo "Runner Arch: $RUNNER_ARCH"
+          hostname
+          pwd
+
+      - name: Test execution
+        run: |
+          echo "Hello from Self-Hosted Runner!"
+          date
+
+      - name: List files
+        run: ls -la
