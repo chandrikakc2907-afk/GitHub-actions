@@ -2,30 +2,38 @@ name: Self Hosted Runner Test
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
 
 jobs:
   test-runner:
     runs-on: self-hosted
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Display runner information
+      - name: Display Runner Details
         run: |
+          echo "===== RUNNER DETAILS ====="
           echo "Runner Name: $RUNNER_NAME"
           echo "Runner OS: $RUNNER_OS"
           echo "Runner Arch: $RUNNER_ARCH"
-          hostname
-          pwd
+          echo "Hostname: $(hostname)"
+          echo "Current User: $(whoami)"
+          echo "Working Directory: $(pwd)"
 
-      - name: Test execution
+      - name: Create Test File On Runner
         run: |
-          echo "Hello from Self-Hosted Runner!"
-          date
+          echo "Job executed on $(hostname) at $(date)" > selfhosted_test.txt
+          cat selfhosted_test.txt
 
-      - name: List files
-        run: ls -la
+      - name: Check Home Directory
+        run: |
+          ls -la ~
+          ls -la
+
+      - name: Show System Information
+        run: |
+          df -h
+          free -m || true
+          uname -a
+
+      - name: Success Message
+        run: |
+          echo "✅ This workflow is running on SELF-HOSTED RUNNER"
