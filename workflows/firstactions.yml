@@ -1,1 +1,29 @@
+name: Self Hosted Runner Test
 
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  test-runner:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Display runner details
+        run: |
+          echo "Runner Name: $RUNNER_NAME"
+          echo "Runner OS: $RUNNER_OS"
+          echo "Machine Name:"
+          hostname
+
+      - name: Test command
+        run: |
+          echo "Hello from Self Hosted Runner!"
+          date
+          pwd
+          ls -la
