@@ -5,12 +5,17 @@ on:
 
 jobs:
   verify:
-    runs-on: self-hosted
+    runs-on:
+      - self-hosted
+      - Linux
+      - X64
 
     steps:
       - name: Verify Runner
         run: |
           echo "Runner Name: $RUNNER_NAME"
+          echo "Runner OS: $RUNNER_OS"
           hostname
+          date
           touch /tmp/github-test.txt
-          cat /etc/os-release
+          ls -l /tmp/github-test.txt
