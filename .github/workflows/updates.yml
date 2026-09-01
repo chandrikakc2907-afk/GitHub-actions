@@ -1,1 +1,17 @@
+name: Runner Test
 
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: self-hosted
+
+    steps:
+      - name: Verify Runner
+        run: |
+          echo "Running on $(hostname)"
+          echo "Runner Name: $RUNNER_NAME"
+          date
+          touch /tmp/runner-test.txt
+          ls -l /tmp/runner-test.txt
