@@ -2,9 +2,6 @@ name: Self Hosted Runner Test
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
 
 jobs:
   test-runner:
@@ -18,12 +15,28 @@ jobs:
         run: |
           echo "Runner Name: $RUNNER_NAME"
           echo "Runner OS: $RUNNER_OS"
-          echo "Machine Name:"
+          echo "Runner Temp: $RUNNER_TEMP"
+          echo "Workspace: $GITHUB_WORKSPACE"
           hostname
+          whoami
 
-      - name: Test command
+      - name: Create proof file on runner
         run: |
-          echo "Hello from Self Hosted Runner!"
-          date
-          pwd
-          ls -la
+          echo "Job executed on self-hosted runner at $(date)" > /tmp/selfhosted-test.txt
+          cat /tmp/selfhosted-test.txt
+
+      - name: Show machine information
+        run: |
+          echo "CPU Details"
+          lscpu | head -15
+
+          echo "Memory Details"
+          free -h
+
+          echo "Disk Details"
+          df -h
+
+      - name: Keep logs visible
+        run: |
+          echo "===== SUCCESS ====="
+          echo "This job is running on the self-
